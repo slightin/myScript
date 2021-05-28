@@ -1,11 +1,11 @@
 // ==UserScript==
 // @name         教学评估
-// @namespace    http://tampermonkey.net/
-// @version      1.2
+// @namespace    https://github.com/slightin
+// @version      1.3
 // @description  自动教学评估,自动点击“非常符合”或“符合”
 // @author       盛夏
 // @match        *://27.188.65.169:*/student/teachingEvaluation/*
-// @match        *://202.206.161.*:46110/student/teachingEvaluation/*
+// @match        *://*/student/teachingEvaluation/*
 // @icon         http://27.188.65.169:9111/img/icon/favicon.ico
 // @grant        none
 // ==/UserScript==
