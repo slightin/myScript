@@ -3,8 +3,15 @@
 // @namespace    https://github.com/slightin
 // @description  自动教学评估,自动点击“非常符合”,适用于河北工程大学URP教务系统
 // @author       万事可乐
-// @version      2.0.6
-// @match        *://27.188.65.169:*/student/teachingEvaluation/*
+// @version      2.1.3
+// @match        http://27.188.65.169:911*/
+// @match        http://27.188.65.169:911*/index.jsp
+// @match        http://202.206.161.181:46110/
+// @match        http://202.206.161.203:46110/
+// @match        http://202.206.161.206:46110/
+// @match        http://202.206.161.181:46110/index.jsp
+// @match        http://202.206.161.203:46110/index.jsp
+// @match        http://202.206.161.206:46110/index.jsp
 // @match        */student/teachingEvaluation/*
 // @icon         http://27.188.65.169:9111/img/icon/favicon.ico
 // @grant        none
@@ -69,7 +76,7 @@
         var ins = document.getElementById("buttonSubmit")
         var div = document.querySelector("#page-content-template > div > div > div:nth-child(3)")
         div.insertBefore(tip,ins)
-        tip.innerHTML='时间结束会自动提交并进入下一评估中哦U•ェ•*U<br/>为保证脚本的正常运行，请保持浏览器处于此窗口<br/>计时检测在服务器端，暂无法跳过，若脚本有运行问题，请<u><a href="https://scriptcat.org/script-show-page/220/comment" target="_blank">点此反馈</a></u>'
+        tip.innerHTML='时间结束会自动提交并进入下一评估中哦U•ェ•*U<br/>为保证脚本的正常运行，请保持浏览器处于此窗口<br/>计时检测在服务器端，暂无法跳过。开发不易，觉得好用还请<u><a href="https://scriptcat.org/script-show-page/220/comment" target="_blank">给个好评</a></u>'
         window.scrollTo(0,document.body.clientHeight)//保证滚动到页面底端
 
         //提交模块
@@ -79,5 +86,78 @@
             }
         },1000);//检测间隔
     }
-})();
 
+    if(location.pathname=="/" || location.pathname=="/index.jsp") {//主页快捷面板
+        var shortcut=document.createElement("div")
+        document.querySelector("#page-content-template > div.row").appendChild(shortcut)
+        shortcut.className="col-sm-6 widget-container-col"
+        setInterval(function(){
+            var lefth = document.querySelector("#page-content-template > div.row > div.col-xs-12.self-margin > div.row > div:nth-child(1)").offsetHeight
+            var righth = document.querySelector("#page-content-template > div.row > div.col-xs-12.self-margin > div.row > div:nth-child(2)").offsetHeight
+            if(lefth>righth)shortcut.style.marginTop=righth-lefth+"px"
+            else shortcut.style.marginTop=0
+        },100)
+        shortcut.innerHTML=`<div class="widget-box">
+                <div class="widget-header">
+                    <h5 class="widget-title">
+                        快捷面板（河工程教学评估脚本提供）
+                    </h5>
+                    <a class="widget-toolbar" href="https://scriptcat.org/script-show-page/220/issue" target="_blank">点此反馈</a>
+                </div>
+                <div class="widget-body">
+                    <div class="widget-main">
+                        <a class="infobox infobox-orange2 click-item shortcutmain" href="/student/integratedQuery/scoreQuery/thisTermScores/index" style="text-decoration: none">
+                            <div class="infobox-icon">
+                                <i class="ace-icon fa fa-file-text"></i>
+                            </div>
+                            <div class="shortcuttext">本学期成绩</div>
+                        </a>
+                        <a class="infobox infobox-green click-item shortcutmain" href="/student/integratedQuery/scoreQuery/coursePropertyScores/index" style="text-decoration: none">
+                            <div class="infobox-icon">
+                                <i class="ace-icon fa fa-list-alt"></i>
+                            </div>
+                            <div class="shortcuttext">全部成绩</div>
+                        </a>
+                        <a class="infobox infobox-blue click-item shortcutmain" href="/student/courseSelect/thisSemesterCurriculum/index" style="text-decoration: none">
+                            <div class="infobox-icon">
+                                <i class="ace-icon fa fa-calendar"></i>
+                            </div>
+                            <div class="shortcuttext">本学期课表</div>
+                        </a>
+                        <a class="infobox infobox-orange click-item shortcutmain" href="http://27.188.65.169:9900/pjxfjdpm/" target="_blank" style="text-decoration: none">
+                            <div class="infobox-icon">
+                                <i class="ace-icon fa fa-grade"></i>
+                            </div>
+                            <div class="shortcuttext">专业排名</div>
+                        </a>
+                        <a class="infobox infobox-red click-item shortcutmain" href="/student/teachingEvaluation/evaluation/index" style="text-decoration: none">
+                            <div class="infobox-icon">
+                                <i class="ace-icon fa fa-jxpg"></i>
+                            </div>
+                            <div class="shortcuttext">教学评估</div>
+                        </a>
+                        <a class="infobox infobox-pink click-item shortcutmain" href="https://scriptcat.org/script-show-page/220/comment" target="_blank" style="text-decoration: none">
+                            <div class="infobox-icon">
+                                <i class="ace-icon fa fa-check-circle-o"></i>
+                            </div>
+                            <div class="shortcuttext">给个好评</div>
+                        </a>
+                        
+                        <style type="text/css">
+                            .shortcuttext {
+                                font-size: 18px;
+                                line-height: 40px;
+                                display: inline;
+                                padding-left: 10px;
+                            }
+                            .shortcutmain {
+                                width:205px;
+                                padding-top:10px;
+                                padding-left:20px
+                            }
+                        </style>
+                    </div>
+                <div>
+            </div>`
+    }
+})();
