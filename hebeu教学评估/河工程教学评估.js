@@ -1,10 +1,10 @@
 // ==UserScript==
-// @name         河工程教学评估
-// @namespace    https://github.com/slightin
-// @description  自动教学评估,自动点击“非常符合”,适用于河北工程大学URP教务系统
+//  @name        河工程教学评估
+// @namespace     https://github.com/slightin
+// @description    自动教学评估,自动点击“非常符合”,适用于河北工程大学URP教务系统
 // @author       万事可乐
-// @version      2.1.3
-// @match        http://27.188.65.169:911*/
+//  @version      2.2.2
+// @match        http://27.188.65.169:911*
 // @match        http://27.188.65.169:911*/index.jsp
 // @match        http://202.206.161.181:46110/
 // @match        http://202.206.161.203:46110/
@@ -20,7 +20,17 @@
 (function() {
     'use strict';
     //主观评价
-    var eva="老师重视教学，严慈相济，关爱学生，讲授详略得当，重点突出，难点讲透"
+    var eva=[
+        "老师重视教学，严慈相济，关爱学生，讲授详略得当，重点突出，难点讲透",
+        "老师备课充分，内容讲解熟练，讲课充满激情，让我始终保持上课的兴趣",
+        "老师使用多种教学方法，师生互动多，讲课风趣幽默，有助于我理解和记忆",
+        "教师上课认真负责，专业基础极技能高深，非常注重学生的实际动手能力。注重学生专业能力和素养的培养。上课语言幽默，互动适当，演示精准精彩",
+        "老师总是能够认真倾听学生的问题、意见与建议，并给予耐心细致的回答",
+        "课堂氛围轻松活跃，积极调动了学生的兴趣。并且学习内容安排恰当，注重能力培养",
+        "切入点新颖，很有新意，能充分吸引学生的注意力，符合学生的学习兴趣，使得课堂活泼不古板",
+        "老师爱党爱国，积极向上，备课充分，内容讲解熟练，课程设置合理，深浅知宜",
+        "老师体系的讲解本课程的知识结构学习导图，使学生能了解到本课程的重点难点"
+    ]
 
     // code here...
     var tpath = "#page-content-template > div > div > div.widget-content > form > div > table > tbody > ";//记录多次用到的js路径前缀
@@ -58,18 +68,27 @@
     //评估详情页执行
     if(/evaluationPage/.test(window.location.href))
     {
-        for(var i=3;i<22;i+=2)
-        {
-            for(var j=1;j<6;j++)
-            {
-                if(/非常符合/.test(document.querySelector(tpath+"tr:nth-child("+i+") > td > div:nth-child("+j+") > label > span:nth-child(3)").innerText))
-                {
-                    document.querySelector(tpath+"tr:nth-child("+i+") > td > div:nth-child("+j+") > label > span:nth-child(3)").click();
-                }
-            }
-        }
+        // for(var i=3;i<22;i+=2)
+        // {
+        //     for(var j=1;j<6;j++)
+        //     {
+        //         if(/非常符合/.test(document.querySelector(tpath+"tr:nth-child("+i+") > td > div:nth-child("+j+") > label > span:nth-child(3)").innerText))
+        //         {
+        //             document.querySelector(tpath+"tr:nth-child("+i+") > td > div:nth-child("+j+") > label > span:nth-child(3)").click();
+        //         }
+        //     }
+        // }
 
-        document.querySelector(tpath+"tr:nth-child(23) > td > div > textarea").value=eva;//主观评价
+        // document.querySelector(tpath+"tr:nth-child(23) > td > div > textarea").value=eva;//主观评价
+        $("textarea").each(function(i){
+            if(i<10){
+                $(this).text(9+Math.floor(Math.random()*10)/10)
+            }
+            else{
+                $(this).text(eva[Math.floor(Math.random()*eva.length)])
+            }
+        })
+        document.querySelector("#RemainM").innerText=2
 
         //用户提示模块
         var tip = document.createElement("h4")
@@ -83,6 +102,7 @@
         setInterval(function(){
             if(document.querySelector("#RemainM").innerText=='0' && document.querySelector("#RemainS").innerText=='0'){//时间结束时点击提交
                 document.querySelector("#buttonSubmit").click()
+                $('a.layui-layer-btn0').click()
             }
         },1000);//检测间隔
     }
