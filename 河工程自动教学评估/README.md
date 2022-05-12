@@ -1,4 +1,4 @@
-# 河工程自动评教
+# 河工程自动评教 ![版本](https://img.shields.io/badge/dynamic/json?color=success&label=当前版本&query=%24.data.script.version&url=https%3A%2F%2Fscriptcat.org%2Fapi%2Fv1%2Fscripts%2F220)
 
 ### <font face="宋体">自动教学评估，适用于河北工程大学URP教务系统</font>
 
