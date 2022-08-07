@@ -2,7 +2,7 @@
 
 自己写的脚本
 
-以下数据来自[脚本猫](https://scriptcat.org/users/27321)
+以下数据来自<img src=https://scriptcat.org/assets/logo.png height=12>[脚本猫](https://scriptcat.org/users/27321)
 
 |学习通自动讨论|河工程教学评估|河工程成绩提醒|
 | :-: | :-: | :-: |
