@@ -1,19 +1,15 @@
 // ==UserScript==
 //  @name        河工程教学评估
 // @namespace     https://github.com/slightin
-// @description    自动教学评估,自动点击“非常符合”,适用于河北工程大学URP教务系统
+// @description    自动教学评估,自动评分和主观评价,适用于河北工程大学URP教务系统
 // @author       万事可乐
-//  @version      2.2.2
-// @match        http://27.188.65.169:911*
-// @match        http://27.188.65.169:911*/index.jsp
-// @match        http://202.206.161.181:46110/
-// @match        http://202.206.161.203:46110/
-// @match        http://202.206.161.206:46110/
-// @match        http://202.206.161.181:46110/index.jsp
-// @match        http://202.206.161.203:46110/index.jsp
-// @match        http://202.206.161.206:46110/index.jsp
+//  @version      2.2.6
+// @include        http://27.188.65.169:911*
+// @match        http://202.206.161.181:46110/*
+// @match        http://202.206.161.203:46110/*
+// @match        http://202.206.161.206:46110/*
 // @match        */student/teachingEvaluation/*
-// @icon         http://27.188.65.169:9111/img/icon/favicon.ico
+// @icon         https://cdn.jellow.site/Fgwb1WzJddpQanzWwg9bVURFF37Vv2.png
 // @grant        none
 // ==/UserScript==
 
@@ -29,11 +25,8 @@
         "课堂氛围轻松活跃，积极调动了学生的兴趣。并且学习内容安排恰当，注重能力培养",
         "切入点新颖，很有新意，能充分吸引学生的注意力，符合学生的学习兴趣，使得课堂活泼不古板",
         "老师爱党爱国，积极向上，备课充分，内容讲解熟练，课程设置合理，深浅知宜",
-        "老师体系的讲解本课程的知识结构学习导图，使学生能了解到本课程的重点难点"
+        "老师体系的讲解本课程的知识结构学习导图，使学生能够了解到本课程的重点难点"
     ]
-
-    // code here...
-    var tpath = "#page-content-template > div > div > div.widget-content > form > div > table > tbody > ";//记录多次用到的js路径前缀
     var flag = true;
 
     //评估主页模块
@@ -68,18 +61,6 @@
     //评估详情页执行
     if(/evaluationPage/.test(window.location.href))
     {
-        // for(var i=3;i<22;i+=2)
-        // {
-        //     for(var j=1;j<6;j++)
-        //     {
-        //         if(/非常符合/.test(document.querySelector(tpath+"tr:nth-child("+i+") > td > div:nth-child("+j+") > label > span:nth-child(3)").innerText))
-        //         {
-        //             document.querySelector(tpath+"tr:nth-child("+i+") > td > div:nth-child("+j+") > label > span:nth-child(3)").click();
-        //         }
-        //     }
-        // }
-
-        // document.querySelector(tpath+"tr:nth-child(23) > td > div > textarea").value=eva;//主观评价
         $("textarea").each(function(i){
             if(i<10){
                 $(this).text(9+Math.floor(Math.random()*10)/10)
@@ -88,7 +69,7 @@
                 $(this).text(eva[Math.floor(Math.random()*eva.length)])
             }
         })
-        document.querySelector("#RemainM").innerText=2
+      document.querySelector("#RemainM").innerText=2 
 
         //用户提示模块
         var tip = document.createElement("h4")
@@ -101,22 +82,22 @@
         //提交模块
         setInterval(function(){
             if(document.querySelector("#RemainM").innerText=='0' && document.querySelector("#RemainS").innerText=='0'){//时间结束时点击提交
-                document.querySelector("#buttonSubmit").click()
-                $('a.layui-layer-btn0').click()
+                document.querySelector("#buttonSubmit").click();
+              $('a.layui-layer-btn0').click()
             }
         },1000);//检测间隔
+    }
+
+    if(location.pathname=="/login"){
+        $("#native > a").after(`
+            <br/><input type="checkbox" name="_spring_security_remember_me" class="fadeIn third" style="margin-bottom: 5px;text-align: left;" checked>&nbsp;两周之内不必登录
+        `)
     }
 
     if(location.pathname=="/" || location.pathname=="/index.jsp") {//主页快捷面板
         var shortcut=document.createElement("div")
         document.querySelector("#page-content-template > div.row").appendChild(shortcut)
         shortcut.className="col-sm-6 widget-container-col"
-        setInterval(function(){
-            var lefth = document.querySelector("#page-content-template > div.row > div.col-xs-12.self-margin > div.row > div:nth-child(1)").offsetHeight
-            var righth = document.querySelector("#page-content-template > div.row > div.col-xs-12.self-margin > div.row > div:nth-child(2)").offsetHeight
-            if(lefth>righth)shortcut.style.marginTop=righth-lefth+"px"
-            else shortcut.style.marginTop=0
-        },100)
         shortcut.innerHTML=`<div class="widget-box">
                 <div class="widget-header">
                     <h5 class="widget-title">
@@ -162,7 +143,6 @@
                             </div>
                             <div class="shortcuttext">给个好评</div>
                         </a>
-                        
                         <style type="text/css">
                             .shortcuttext {
                                 font-size: 18px;
@@ -178,6 +158,6 @@
                         </style>
                     </div>
                 <div>
-            </div>`
+        </div>`
     }
 })();
